@@ -26,6 +26,9 @@ public class DemoController {
     @Value("${apia.secret}")
     private String secret;
 
+    @Value("${server.port}")
+    private  int port;
+
     @Autowired
     private RestTemplate restTemplate;
 
@@ -34,19 +37,19 @@ public class DemoController {
 
     @GetMapping(value = "/details",produces = APPLICATION_JSON_VALUE)
     public GetDetailsResponse getDetails(){
-        return new GetDetailsResponse(name, version, secret);
+        return new GetDetailsResponse(name, version, secret, port);
     }
 
     @GetMapping(value = "/details/confprop",produces = APPLICATION_JSON_VALUE)
     public GetDetailsResponse getDetailsconfProp(){
-        return new GetDetailsResponse(apiProperties.getName(), apiProperties.getVersion(), apiProperties.getSecret());
+        return new GetDetailsResponse(apiProperties.getName(), apiProperties.getVersion(), apiProperties.getSecret(), port);
     }
 
     @GetMapping(value = "/downstream/info",produces = APPLICATION_JSON_VALUE)
     public DownStreamResponse callDownStream(){
         DownStreamResponse downStreamResponse = new DownStreamResponse();
         downStreamResponse.setDownstreamApiInfo(restTemplate.getForObject(apiProperties.getDownstreamUrl() + "/details/confprop", GetDetailsResponse.class));
-        downStreamResponse.setSelfInfo( new GetDetailsResponse(apiProperties.getName(), apiProperties.getVersion(), apiProperties.getSecret()));
+        downStreamResponse.setSelfInfo( new GetDetailsResponse(apiProperties.getName(), apiProperties.getVersion(), apiProperties.getSecret(), port));
         return downStreamResponse;
     }
 }

@@ -9,13 +9,15 @@ public class GetDetailsResponse {
 
     private String secret;
 
+    private int port;
 
     public GetDetailsResponse() {
     }
-    public GetDetailsResponse(String name, String version, String secret) {
+    public GetDetailsResponse(String name, String version, String secret, int port) {
         this.name = name;
         this.version = version;
         this.secret = secret;
+        this.port = port;
     }
 
     public String getName() {
@@ -40,5 +42,13 @@ public class GetDetailsResponse {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }
